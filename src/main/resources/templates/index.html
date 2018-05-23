@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"></meta>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"></meta>
+  <title>Show Must Go On</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<!--<script src="/js/controller.js"></script>-->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"></link>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<script type="text/javascript" src="/js/movieListController.js"></script>
+
+	<style>
+		/* Remove the navbar's default margin-bottom and rounded borders */ 
+		.navbar {
+		  margin-bottom: 0;
+		  border-radius: 0;
+		}
+		
+		/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+		.row.content {height: 450px}
+		
+		/* Set gray background color and 100% height */
+		.sidenav {
+		  padding-top: 20px;
+		  background-color: #f1f1f1;
+		  height: 100%;
+		}
+		
+		/* Set black background color, white text and some padding */
+		footer {
+		  background-color: #555;
+		  color: white;
+		  padding: 15px;
+		}
+		
+		/* On small screens, set height to 'auto' for sidenav and grid */
+		@media screen and (max-width: 767px) {
+		  .sidenav {
+			height: auto;
+			padding: 15px;
+		  }
+		  .row.content {height:auto;} 
+		}
+	</style>
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse">
+	  <div class="container-fluid">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>                        
+		  </button>
+		  <a class="navbar-brand" href="#">SMGO</a>
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
+		  <ul class="nav navbar-nav">
+			<li class="active"><a href="#">Home</a></li>
+			<li><a href="/peliculas">Peliculas</a></li>
+			<li><a href="/actores">Actores</a></li>
+			<li><a href="/hello">About</a></li>
+		  </ul>
+		  <ul class="nav navbar-nav navbar-right">
+			<li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+			<li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> User <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/movielists"><i class="fa fa-fw fa-user"></i> Listas</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-gear"></i> Mi cuenta</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                        </li>
+                    </ul>
+			</li>
+		  </ul>
+		  
+		</div>
+	  </div>
+	</nav>
+	
+
+	<div class="container-fluid text-center">    
+	  <div class="row content">
+		<div ng-app="listsapp" class="col-sm-2 sidenav" >
+			<div ng-controller="movieListPostController">
+				<form name="movieListForm" ng-submit="submitForm()">
+					<label>Nueva lista</label>
+					<input type="text" name="listName" class="form-control" ng-model="nombre" placeholder="Nombre de la lista"/>
+					<input type="text" name="owner" class="form-control" ng-model="ownerId" placeholder="Id del propietario"/>
+					<button type="submit" class="btn btn-primary">Crear lista</button>
+				</form>
+				<p>{{postResultMessage}}</p>
+			</div> 
+
+			<div ng-controller="movieListGetController">
+				<button id="btnGetMovieList" class="btn btn-primary" ng-click="getfunction()">Ver listas</button>
+				<ul>
+					<li>Id - Nombre - Propietario</li>
+					<li ng-repeat="movieLists in response">{{movieLists.id + " - " + movieLists.nombre + " - " + movieLists.ownerId}}</li>
+				</ul>			 
+			</div>
+		</div>
+		
+		<div class="col-sm-8 text-left"> 
+		  <h1>Peliculas populares</h1>
+		  <img class="thumbnails" src="http://img.lum.dolimg.com/v1/images/starwars_551c43f4.jpeg" alt="Star Wars" width="136" height="194"></img>
+		</div>
+		
+		<div class="col-sm-2 sidenav">
+			<div class="well">
+				<p>Buscar pelicula</p>
+				<input type="text" name="movieName" class="form-control" ng-model="nombre" placeholder="Nombre"/>
+			</div>
+			<div class="well">
+				<p>Buscar Actor</p>
+				<input type="text" name="actorName" class="form-control" ng-model="nombre" placeholder="Nombre"/>
+			</div>
+		</div>
+	  </div>
+	</div>
+	
+<footer class="container-fluid text-center">
+  <p>TACS 1C2017</p>
+</footer>
+<!--
+<section class='container'>
+          <hgroup>
+            <h1>Peliculas populares</h1>
+          </hgroup>
+        <div class="row">
+          <section class='col-xs-12 col-sm-6 col-md-6'>
+            <section>
+              <h2>Deploying code changes</h2>
+                <p>OpenShift uses the <a href="http://git-scm.com/">Git version control system</a> for your source code, and grants you access to it via the Secure Shell (SSH) protocol. In order to upload and download code to your application you need to give us your <a href="https://developers.openshift.com/en/managing-remote-connection.html">public SSH key</a>. You can upload it within the web console or install the <a href="https://developers.openshift.com/en/managing-client-tools.html">RHC command line tool</a> and run <code>rhc setup</code> to generate and upload your key automatically.</p>
+
+                <h3>Working in your local Git repository</h3>
+                <p>If you created your application from the command line and uploaded your SSH key, rhc will automatically download a copy of that source code repository (Git calls this 'cloning') to your local system.</p>
+
+                <p>If you created the application from the web console, you'll need to manually clone the repository to your local system. Copy the application's source code Git URL and then run:</p>
+
+<pre>$ git clone &lt;git_url&gt; &lt;directory_to_create&gt;
+
+# Within your project directory
+# Commit your changes and push to OpenShift
+
+$ git commit -a -m 'Some commit message'
+$ git push</pre>
+
+
+                  <ul>
+                    <li><a href="https://developers.openshift.com/en/managing-modifying-applications.html">Learn more about deploying and building your application</a></li>
+                    <li>See the README file in your local application Git repository for more information on the options for deploying applications.</li>
+                  </ul>
+
+            </section>
+
+          </section>
+          <section class="col-xs-12 col-sm-6 col-md-6">
+
+                <h2>Managing your application</h2>
+
+                <h3>Web Console</h3>
+                <p>You can use the OpenShift web console to enable additional capabilities via cartridges, add collaborator access authorizations, designate custom domain aliases, and manage domain memberships.</p>
+
+                <h3>Command Line Tools</h3>
+                <p>Installing the <a href="https://developers.openshift.com/en/managing-client-tools.html">OpenShift RHC client tools</a> allows you complete control of your cloud environment. Read more on how to manage your application from the command line in our <a href="https://www.openshift.com/user-guide">User Guide</a>.
+                </p>
+
+                <h2>Development Resources</h2>
+                  <h3>JBoss Developer Studio</h3>
+                  <p>
+                    The JBoss Developer Studio is a full featured IDE with OpenShift integration built in.
+                    It gives you the ability to create, edit and deploy applications without having to
+                    leave the IDE.  Links to download, install and use the JBoss Developer Studio for Linux,
+                    Mac OS X, or Windows can be found on the
+                    <a href="https://www.openshift.com/developers/tools">JBoss Developer Studio tools page.</a>
+                  </p>
+                  <h3>Debugging</h3>
+                  <p><a href="snoop.jsp">View debugging information</a> about the server environment including memory pools.</p>
+                  <ul>
+                    <li><a href="https://developers.openshift.com/en/tomcat-overview.html">Getting Started with Tomcat on OpenShift</a></li>
+                    <li><a href="https://developers.openshift.com">Developer Center</a></li>
+                    <li><a href="https://www.openshift.com/user-guide">User Guide</a></li>
+                    <li><a href="https://help.openshift.com">Help Center</a></li>
+                    <li><a href="http://stackoverflow.com/questions/tagged/openshift">Stack Overflow questions for OpenShift</a></li>
+                    <li><a href="http://git-scm.com/documentation">Git documentation</a></li>
+                  </ul>
+
+          </section>
+        </div>
+
+        <footer>
+          <div class="logo"><a href="https://www.openshift.com/"></a></div>
+        </footer>
+</section>
+-->
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+jwt:
+  header: Authorization
+  secret: showmustgoon
+  expiration: 604800
