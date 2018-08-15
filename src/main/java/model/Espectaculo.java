@@ -5,6 +5,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 public class Espectaculo {
 
@@ -12,6 +13,7 @@ public class Espectaculo {
 	public String id;
 	private String nombre;
 	private List<Funcion> funciones;
+	@DBRef
 	private Establecimiento establecimiento;
 
 	public Espectaculo(String unNombre) {
