@@ -14,49 +14,47 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import model.Espectaculo;
-
-import ws.EspectaculoRepository;
+import model.Establecimiento;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/espectaculos")
-public class EspectaculoController extends AbstractController {
+@RequestMapping("/establecimientos")
+public class EstablecimientoController extends AbstractController {
 	
 	@Autowired
-	private EspectaculoRepository repo;
+	private EstablecimientoRepository repo;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<Espectaculo> getEspectaculos() {
-		logger.info("getEspectaculos()");
+	public List<Establecimiento> getEstablecimientos() {
+		logger.info("getEstablecimientos()");
 		return repo.findAll();
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<?> createEspectaculo(@RequestBody Espectaculo espec) throws Exception {
-		logger.info("createEspectaculo()");
-		Espectaculo result = repo.insert(espec);
+	public ResponseEntity<?> createEstablecimiento(@RequestBody Establecimiento espec) throws Exception {
+		logger.info("createEstablecimiento()");
+		Establecimiento result = repo.insert(espec);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(result.getId()).toUri();
 		return ResponseEntity.created(location).build();
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
-	public ResponseEntity<?> updateEspectaculo(@RequestBody Espectaculo espec) throws Exception {
-		logger.info("createEspectaculo()");
+	public ResponseEntity<?> updateEstablecimiento(@RequestBody Establecimiento espec) throws Exception {
+		logger.info("updateEstablecimiento()");
 		repo.save(espec);
 		return ResponseEntity.accepted().build();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<?> deleteEspectaculo(@PathVariable String id) {
-		logger.info("deleteEspectaculo()");
+	public ResponseEntity<?> deleteEstablecimiento(@PathVariable String id) {
+		logger.info("deleteEstablecimiento()");
 		repo.delete(id);
 		return ResponseEntity.ok("Borrado con exito.");
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Espectaculo getEspectaculo(@PathVariable String id){
-		logger.info("getEspectaculo()");
+	public Establecimiento getEstablecimiento(@PathVariable String id){
+		logger.info("getEstablecimiento()");
 		return repo.findById(id);
 	}
 	

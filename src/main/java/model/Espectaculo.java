@@ -2,6 +2,8 @@ package model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.data.annotation.Id;
 
 public class Espectaculo {
@@ -9,14 +11,11 @@ public class Espectaculo {
 	@Id
 	public String id;
 	private String nombre;
-	private String fecha;
-	private List<String> artistas;
+	private List<Funcion> funciones;
+	private Establecimiento establecimiento;
 
-
-	public Espectaculo(String unNombre, String unaFecha, List<String> listaArtistas) {
+	public Espectaculo(String unNombre) {
 		nombre = unNombre;
-		fecha = unaFecha;
-		artistas = listaArtistas;
 	}
 	
 	public Espectaculo() {
@@ -31,14 +30,6 @@ public class Espectaculo {
 	public String getNombre() {
 		return nombre;
 	}
-	
-	public String getFecha() {
-		return fecha;
-	}
-	
-	public List<String> getArtistas() {
-		return artistas;
-	}
 
 	public void setId(String unId) {
 		id = unId;
@@ -47,16 +38,35 @@ public class Espectaculo {
 	public void setNombre(String n) {
 		nombre = n;
 	}
-	
-	public void setFecha(String f) {
-		fecha = f;
+
+	public List<Funcion> getFunciones() {
+		return funciones;
 	}
-	
-	public void addArtista(String a) {
-		artistas.add(a);
+
+	public void setFunciones(List<Funcion> lista) {
+		funciones = lista;
 	}
-	
-	public void setArtistas(List<String> a) {
-		artistas = a;
+
+	public void addFuncion(Funcion f) {
+		funciones.add(f);
+	}
+
+	public void setEstablecimiento(Establecimiento e) {
+		this.establecimiento = e;
+	}
+
+	public Establecimiento getEstablecimiento() {
+		return this.establecimiento;
+	}
+
+	@Override
+	public String toString() {
+		String result = "";
+		try {
+			result = (new ObjectMapper().writeValueAsString(this));
+		} catch(Exception e) {
+
+		}
+		return result;
 	}
 }

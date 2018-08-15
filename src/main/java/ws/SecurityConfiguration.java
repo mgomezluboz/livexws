@@ -45,7 +45,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
         return new JwtAuthenticationTokenFilter();
     }
-	
+    
+    //TODO: ajustar los filtros rest
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
@@ -56,6 +57,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/auth/**").permitAll()
             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             .antMatchers(HttpMethod.GET, "/espectaculos/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/establecimientos/**").permitAll()
+            .antMatchers(HttpMethod.POST, "/espectaculos/**").permitAll()
+            .antMatchers(HttpMethod.POST, "/establecimientos/**").permitAll()
             .antMatchers(HttpMethod.POST, "/usuarios/**").permitAll()
             .antMatchers("/js/**").permitAll()
             .anyRequest().authenticated();
