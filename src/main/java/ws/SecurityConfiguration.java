@@ -55,6 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/","/home").permitAll()
             .antMatchers("/auth/**").permitAll()
+            .antMatchers(HttpMethod.POST, "/crearDb/**").permitAll()
             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             .antMatchers(HttpMethod.GET, "/espectaculos/**").permitAll()
             .antMatchers(HttpMethod.GET, "/establecimientos/**").permitAll()
@@ -63,6 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.POST, "/establecimientos/**").permitAll()
             .antMatchers(HttpMethod.PUT, "/establecimientos/**").permitAll()
             .antMatchers(HttpMethod.POST, "/usuarios/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/usuarios/**").hasAuthority("ROLE_ADMIN")
             .antMatchers("/js/**").permitAll()
             .anyRequest().authenticated();
 

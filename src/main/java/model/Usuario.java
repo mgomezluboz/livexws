@@ -15,12 +15,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Usuario implements UserDetails {
 	
+	
 	@Id
 	private String id;
 	private String username;
 	private String password;
 	private Rol rol;
 	private Date ultimaSesion;
+
+	private static final long serialVersionUID = -3861374349926843566L;
 
 	//CONSTRUCTOR
 	public Usuario(String unUser, String unaPass) {
