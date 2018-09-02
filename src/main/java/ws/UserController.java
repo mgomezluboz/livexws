@@ -1,6 +1,7 @@
 package ws;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import model.*;
@@ -53,13 +54,29 @@ public class UserController extends AbstractController{
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<?> addUser(@RequestBody Usuario user) {
 		logger.info("addUser()");
-		if(getUsuarios().stream().filter(u -> user.getUsername().equalsIgnoreCase(u.getUsername())).count()==0){
-			user.setRol(new Rol("Usuario"));
-			repo.insert(user);
-			return ResponseEntity.created(URI.create("http://localhost")).body("El usuario " + user.getUsername() + " ha sido creado");
-		}else{
-			return ResponseEntity.accepted().body("El nombre de usuario ya existe");
+		repo.insert(user);
+		return ResponseEntity.created(URI.create("http://localhost")).body("El usuario " + user.getUsername() + " ha sido creado");
+	}
+
+	@RequestMapping(method = RequestMethod.PUT)
+	public ResponseEntity<?> updateUser(@RequestBody Usuario user) {
+		logger.info("updateUser()");
+		if(null == repo.findById(user.getId())) {
+			return ResponseEntity.badRequest().body("El usuario indicado no existe.");
 		}
+		repo.save(user);
+		return ResponseEntity.accepted().build();
 		
+	}
+
+	@RequestMapping(value="/roles", method = RequestMethod.GET)
+	public List<Rol> getRoles() {
+		logger.info("getRoles()");
+		List<Rol> result = new ArrayList<Rol>();
+		Rol admin = new Rol("Administrador");
+		Rol user = new Rol("Usuario");
+		result.add(admin);
+		result.add(user);
+		return(result);
 	}
 }

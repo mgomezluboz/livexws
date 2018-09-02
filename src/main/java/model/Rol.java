@@ -25,5 +25,8 @@ public class Rol {
 	public Rol(String name) {
 		this.name = name;
 	}
+
+	public Rol() {
+	}
 	
 }

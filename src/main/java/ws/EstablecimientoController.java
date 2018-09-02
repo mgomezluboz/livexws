@@ -49,7 +49,7 @@ public class EstablecimientoController extends AbstractController {
 	public ResponseEntity<?> deleteEstablecimiento(@PathVariable String id) {
 		logger.info("deleteEstablecimiento()");
 		repo.delete(id);
-		return ResponseEntity.ok("Borrado con exito.");
+		return ResponseEntity.ok("{\"status\": \"Borrado con exito.\"}");
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

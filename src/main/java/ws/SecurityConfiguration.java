@@ -65,6 +65,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             //.antMatchers(HttpMethod.POST, "/establecimientos/**").permitAll()
             //.antMatchers(HttpMethod.PUT, "/establecimientos/**").permitAll()
             .antMatchers(HttpMethod.POST, "/usuarios/**").hasAuthority("ROLE_ADMIN")
+            .antMatchers(HttpMethod.PUT, "/usuarios/**").hasAuthority("ROLE_ADMIN")
             .antMatchers(HttpMethod.GET, "/usuarios/**").hasAuthority("ROLE_ADMIN")
             .antMatchers("/js/**").permitAll()
             .anyRequest().authenticated();
