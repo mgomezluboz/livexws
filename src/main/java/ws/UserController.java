@@ -55,18 +55,25 @@ public class UserController extends AbstractController{
 	public ResponseEntity<?> addUser(@RequestBody Usuario user) {
 		logger.info("addUser()");
 		repo.insert(user);
-		return ResponseEntity.created(URI.create("http://localhost")).body("El usuario " + user.getUsername() + " ha sido creado");
+		return ResponseEntity.created(URI.create("http://localhost")).body("{\"message\": \"El usuario " + user.getUsername() + " ha sido creado\"}");
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<?> updateUser(@RequestBody Usuario user) {
 		logger.info("updateUser()");
 		if(null == repo.findById(user.getId())) {
-			return ResponseEntity.badRequest().body("El usuario indicado no existe.");
+			return ResponseEntity.badRequest().body("{\"message\": \"El usuario indicado no existe.\"}");
 		}
 		repo.save(user);
 		return ResponseEntity.accepted().build();
 		
+	}
+
+	@RequestMapping(value="/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<?> deleteUser(@PathVariable("id") String id) {
+		logger.info("deleteUser()");
+		repo.delete(id);
+		return ResponseEntity.ok("");
 	}
 
 	@RequestMapping(value="/roles", method = RequestMethod.GET)
