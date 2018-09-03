@@ -15,6 +15,7 @@ public class Espectaculo {
 	private List<Funcion> funciones;
 	@DBRef
 	private Establecimiento establecimiento;
+	private List<Comercio> comercios;
 
 	public Espectaculo(String unNombre) {
 		nombre = unNombre;
@@ -59,6 +60,23 @@ public class Espectaculo {
 
 	public Establecimiento getEstablecimiento() {
 		return this.establecimiento;
+	}
+
+	/**
+	 * @return the comercios
+	 */
+	public List<Comercio> getComercios() {
+		return comercios;
+	}
+	/**
+	 * @param comercios the comercios to set
+	 */
+	public void setComercios(List<Comercio> comercios) {
+		this.comercios = comercios;
+	}
+	
+	public void addComercio(Comercio c) {
+		this.comercios.add(c);
 	}
 
 	@Override

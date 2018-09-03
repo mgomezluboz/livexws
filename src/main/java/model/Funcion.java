@@ -15,6 +15,7 @@ public class Funcion {
     @DateTimeFormat(iso = ISO.DATE_TIME)
     private Date fecha;
     private String artista;
+    private String setList;
 
     public Funcion() {
 
@@ -39,6 +40,20 @@ public class Funcion {
 
     public void setArtista(String a) {
         artista = a;
+    }
+
+    /**
+     * @param setList the setList to set
+     */
+    public void setSetList(String setList) {
+        this.setList = setList;
+    }
+
+    /**
+     * @return the setList
+     */
+    public String getSetList() {
+        return setList;
     }
 
     @Override

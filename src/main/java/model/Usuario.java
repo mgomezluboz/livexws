@@ -12,7 +12,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+@JsonInclude(Include.NON_NULL)
 public class Usuario implements UserDetails {
 	
 	
@@ -32,9 +35,13 @@ public class Usuario implements UserDetails {
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		password = encoder.encode(unaPass);
 	}
+
+	public Usuario(String name) {
+		username = name;
+	}
 	
 	public Usuario() {
-		
+		super();
 	}
 
 	//GETTERS and SETTERS
