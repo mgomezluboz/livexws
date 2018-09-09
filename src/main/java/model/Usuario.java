@@ -3,8 +3,10 @@ package model;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,6 +27,9 @@ public class Usuario implements UserDetails {
 	private String password;
 	private Rol rol;
 	private Date ultimaSesion;
+	
+	@DBRef
+	private List<Publicacion> publicaciones;
 
 	private static final long serialVersionUID = -3861374349926843566L;
 
@@ -42,6 +47,24 @@ public class Usuario implements UserDetails {
 	
 	public Usuario() {
 		super();
+	}
+
+	public void addPublicacion(Publicacion s) {
+		publicaciones.add(s);
+	}
+
+	/**
+	 * @return the publicaciones
+	 */
+	public List<Publicacion> getPublicaciones() {
+		return publicaciones;
+	}
+
+	/**
+	 * @param publicaciones the publicaciones to set
+	 */
+	public void setPublicaciones(List<Publicacion> publicaciones) {
+		this.publicaciones = publicaciones;
 	}
 
 	//GETTERS and SETTERS

@@ -7,6 +7,11 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+
 @Configuration
 public class RestConfig {
     @Bean
@@ -23,5 +28,16 @@ public class RestConfig {
         config.addAllowedMethod("DELETE");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
+    }
+
+    @Autowired
+    private MongoDbFactory mongoFactory;
+
+    @Autowired
+    private MappingMongoConverter mongoConverter;
+
+    @Bean
+    public GridFsTemplate gridFsTemplate() throws Exception {
+        return new GridFsTemplate(mongoFactory, mongoConverter);
     }
 }

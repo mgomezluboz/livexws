@@ -54,6 +54,9 @@ public class UserController extends AbstractController{
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<?> addUser(@RequestBody Usuario user) {
 		logger.info("addUser()");
+		if(repo.findByUsername(user.getUsername()) != null) {
+			return ResponseEntity.badRequest().body("{\"message\": \"Nombre de usuario en uso.\"}");
+		}
 		repo.insert(user);
 		return ResponseEntity.created(URI.create("http://localhost")).body("{\"message\": \"El usuario " + user.getUsername() + " ha sido creado\"}");
 	}
