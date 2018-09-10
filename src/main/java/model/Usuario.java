@@ -29,7 +29,12 @@ public class Usuario implements UserDetails {
 	private Date ultimaSesion;
 	
 	@DBRef
+	@JsonIgnore
 	private List<Publicacion> publicaciones;
+
+	@DBRef
+	@JsonIgnore
+	private List<Usuario> amigos;
 
 	private static final long serialVersionUID = -3861374349926843566L;
 
@@ -153,5 +158,25 @@ public class Usuario implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	/**
+	 * @return the amigos
+	 */
+	public List<Usuario> getAmigos() {
+		return amigos;
+	}
+	/**
+	 * @param amigos the amigos to set
+	 */
+	public void setAmigos(List<Usuario> amigos) {
+		this.amigos = amigos;
+	}
+	public void addAmigos(Usuario a) {
+		this.amigos.add(a);
+	}
+
+	public void removeAmigo(Usuario a) {
+		this.amigos.remove(a);
 	}
 }

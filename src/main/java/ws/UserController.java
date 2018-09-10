@@ -49,6 +49,34 @@ public class UserController extends AbstractController{
 		return  repo.findById(id);
 
 	}
+
+	@RequestMapping(value="/{id}/friends", method = RequestMethod.GET)
+	public List<Usuario> getUserFriendList(@PathVariable("id") String id) {
+		return repo.findById(id).getAmigos();
+	}
+
+	@RequestMapping(value="/{id}/friends/{fid}", method = RequestMethod.POST)
+	public ResponseEntity<?> addUserToFriendList(@PathVariable("id") String id, @PathVariable("fid") String fid) {
+		Usuario u = repo.findById(id);
+		Usuario f = repo.findById(fid);
+		u.addAmigos(f);
+		repo.save(u);
+		return ResponseEntity.ok("");
+	}
+
+	@RequestMapping(value="/{id}/friends/{fid}", method = RequestMethod.DELETE)
+	public ResponseEntity<?> deleteUserFromFriendList(@PathVariable("id") String id, @PathVariable("fid") String fid) {
+		Usuario u = repo.findById(id);
+		Usuario f = repo.findById(fid);
+		u.removeAmigo(f);
+		repo.save(u);
+		return ResponseEntity.ok("");
+	}
+
+	@RequestMapping(value="/{id}/posts", method = RequestMethod.GET)
+	public List<Publicacion> getUserPosts(@PathVariable("id") String id) {
+		return repo.findById(id).getPublicaciones();
+	}
 	
 	// Crear nuevo usuario
 	@RequestMapping(method = RequestMethod.POST)

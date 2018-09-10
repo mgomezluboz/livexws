@@ -21,6 +21,8 @@ public class PublicacionController extends AbstractController {
 
     @Autowired
 	private PublicacionRepository repo;
+
+	@Autowired private UsuarioRepository userRepo;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Publicacion> getPublicaciones() {
@@ -39,6 +41,11 @@ public class PublicacionController extends AbstractController {
 	public ResponseEntity<?> addPublicacion(@RequestBody Publicacion pub) {
 		logger.info("addPublicacion()");
 		repo.insert(pub);
+
+		Usuario user = userRepo.findById(pub.userId);
+		user.addPublicacion(pub);
+		userRepo.save(user);
+
 		return ResponseEntity.created(URI.create("http://localhost")).body("{\"message\": \"Creada con exito.\"}");
 	}
 
