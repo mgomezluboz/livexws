@@ -89,6 +89,19 @@ public class UserController extends AbstractController{
 		return ResponseEntity.created(URI.create("http://localhost")).body("{\"message\": \"El usuario " + user.getUsername() + " ha sido creado\"}");
 	}
 
+	// Crear nuevo usuario
+	@RequestMapping(value="/registrar", method = RequestMethod.POST)
+	public ResponseEntity<?> registerUser(@RequestBody Usuario user) {
+		logger.info("registrarUser()");
+		if(repo.findByUsername(user.getUsername()) != null) {
+			return ResponseEntity.badRequest().body("{\"message\": \"Nombre de usuario en uso.\"}");
+		}
+		Rol rol = new Rol("Usuario");
+		user.setRol(rol);
+		repo.insert(user);
+		return ResponseEntity.created(URI.create("http://localhost")).body("{\"message\": \"El usuario " + user.getUsername() + " ha sido creado\"}");
+	}
+
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<?> updateUser(@RequestBody Usuario user) {
 		logger.info("updateUser()");
