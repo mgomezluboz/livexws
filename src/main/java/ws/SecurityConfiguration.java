@@ -47,7 +47,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new JwtAuthenticationTokenFilter();
     }
     
-    //TODO: ajustar los filtros rest
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
