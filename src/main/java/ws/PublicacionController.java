@@ -67,4 +67,16 @@ public class PublicacionController extends AbstractController {
 		return ResponseEntity.ok("");
 	}
 
+	@RequestMapping(value="/usuario/{id}", method = RequestMethod.GET)
+	public List<Publicacion> getPublicacionByUserId(@PathVariable("id") String id){
+		logger.info("getPublicacionByUserId()");
+		return  repo.findByUserId(id);
+	}
+
+	@RequestMapping(value="/evento/{id}", method = RequestMethod.GET)
+	public List<Publicacion> getPublicacionByEventoId(@PathVariable("id") String id){
+		logger.info("getPublicacionByEventoId()");
+		return  repo.findByEventoId(id);
+	}
+
 }

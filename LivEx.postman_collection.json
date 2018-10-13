@@ -1,0 +1,638 @@
+{
+	"info": {
+		"_postman_id": "e4e0a225-dd13-4a8a-826f-a10f4396ee61",
+		"name": "LivEx",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Espectaculos",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{ip}}:{{port}}/espectaculos",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"espectaculos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Lollapalooza\",\n    \"establecimiento\": {\n\t    \"id\": \"5b731b8b07ca06b834e1db05\",\n\t    \"nombre\": \"Auditorio Sur\",\n\t    \"direccion\": \"Av Meeks 1050, Temperley\",\n\t    \"capacidad\": 150\n\t},\n\t\"funciones\":[{\n\t\t\"fecha\": 1534298829049,\n\t\t\"artista\": \"Seru Giran\"\n\t}]\n}"
+						},
+						"url": {
+							"raw": "{{ip}}:{{port}}/espectaculos",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"espectaculos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{ip}}:{{port}}/espectaculos/5b738aee07ca0696d4be4539",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"espectaculos",
+								"5b738aee07ca0696d4be4539"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{ip}}:{{port}}/espectaculos/0",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"espectaculos",
+								"0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Crear admin en DB",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{ip}}:{{port}}/usuarios/crearDb",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"usuarios",
+								"crearDb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{ip}}:{{port}}/usuarios",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{ip}}:{{port}}/usuarios/5b7c2f1607ca060bb0d16417",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"usuarios",
+								"5b7c2f1607ca060bb0d16417"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear usuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"juan\",\n\t\"password\": \"1234\",\n\t\"rol\": {\n\t\t\"id\": 0,\n\t\t\"name\": \"Usuario\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{ip}}:{{port}}/usuarios",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{ip}}:{{port}}/usuarios/5b7c2f1607ca060bb0d16417",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"usuarios",
+								"5b7c2f1607ca060bb0d16417"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar usuario",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"id\": \"5b8978c83095701c3889799a\",\n        \"username\": \"juan\",\n        \"password\": \"4567\",\n        \"rol\": {\n            \"id\": 0,\n            \"name\": \"Usuario\"\n        }\n    }"
+						},
+						"url": {
+							"raw": "{{ip}}:{{port}}/usuarios",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "989dfb61-0da9-4878-b1ec-f675ca4a2ff2",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.globals.set(\"token\",jsonData.token);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"martin\",\n\t\"password\": \"1234\"\n}"
+						},
+						"url": {
+							"raw": "{{ip}}:{{port}}/auth",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Db usuarios",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{ip}}:{{port}}/usuarios/crearDb",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"usuarios",
+								"crearDb"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Establecimientos",
+			"item": [
+				{
+					"name": "Establecimientos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "192.168.0.86:8080/establecimientos",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"86"
+							],
+							"port": "8080",
+							"path": [
+								"establecimientos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Nuevo establecimiento",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\": \"Auditorio Sur\",\n\t\"direccion\": \"Av Meeks 1050, Temperley\",\n\t\"capacidad\": 150\n}"
+						},
+						"url": {
+							"raw": "192.168.0.86:8080/establecimientos",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"86"
+							],
+							"port": "8080",
+							"path": [
+								"establecimientos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar establecimiento",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nombre\": \"Auditorio Sur\",\n\t\"direccion\": \"Av Meeks 1050, Temperley\",\n\t\"capacidad\": 150\n}"
+						},
+						"url": {
+							"raw": "192.168.0.86:8080/establecimientos",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"86"
+							],
+							"port": "8080",
+							"path": [
+								"establecimientos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Establecimiento by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "192.168.0.86:8080/establecimientos/5b731b8b07ca06b834e1db05",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"86"
+							],
+							"port": "8080",
+							"path": [
+								"establecimientos",
+								"5b731b8b07ca06b834e1db05"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Establecimiento by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "192.168.0.86:8080/establecimientos/5b731b8b07ca06b834e1db05",
+							"host": [
+								"192",
+								"168",
+								"0",
+								"86"
+							],
+							"port": "8080",
+							"path": [
+								"establecimientos",
+								"5b731b8b07ca06b834e1db05"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Publicaciones",
+			"item": [
+				{
+					"name": "Obtener publicacion",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Jodiendo\",\n\t\"desc\": \"Aca jodiendo\",\n\t\"userId\": \"5b7c4aab11e59b29473997e1\"\n}"
+						},
+						"url": {
+							"raw": "{{ip}}:{{port}}/publicaciones",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"publicaciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear publicacion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Jodiendo\",\n\t\"desc\": \"Aca jodiendo\",\n\t\"userId\": \"5b7c4aab11e59b29473997e1\"\n}"
+						},
+						"url": {
+							"raw": "{{ip}}:{{port}}/publicaciones",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"publicaciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Publicar imagen",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "undefined",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Content-Disposition",
+									"value": "form-data",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "file",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "file",
+									"value": "",
+									"type": "file"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{ip}}:{{port}}/publicaciones/imagenes/5b9326f511e59b6d6a73485a",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"publicaciones",
+								"imagenes",
+								"5b9326f511e59b6d6a73485a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener imagen",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "undefined",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Content-Disposition",
+									"value": "form-data",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "file",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "file",
+									"value": "",
+									"type": "file"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{ip}}:{{port}}/publicaciones/imagenes/5b9326f511e59b6d6a73485a",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"publicaciones",
+								"imagenes",
+								"5b9326f511e59b6d6a73485a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

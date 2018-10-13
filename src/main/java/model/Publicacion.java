@@ -12,10 +12,10 @@ public class Publicacion {
     @Id
     private String id;
 
-    public String name;
     public String desc;
     public Date created = new Date();
     public String userId;
+    public String eventoId;
 
     @ContentId
     private String contentId;
@@ -26,19 +26,6 @@ public class Publicacion {
 
     public Publicacion() {
 
-    }
-
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 
     /**
@@ -131,6 +118,19 @@ public class Publicacion {
      */
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    /**
+     * @return the eventoId
+     */
+    public String getEventoId() {
+        return eventoId;
+    }
+    /**
+     * @param eventoId the eventoId to set
+     */
+    public void setEventoId(String eventoId) {
+        this.eventoId = eventoId;
     }
 
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import exceptions.UserNotFoundException;
@@ -118,6 +119,24 @@ public class UserController extends AbstractController{
 		logger.info("deleteUser()");
 		repo.delete(id);
 		return ResponseEntity.ok("");
+	}
+
+	@RequestMapping(value="/{id}/posicion", method = RequestMethod.GET)
+	public Position getUserPosition(@PathVariable("id") String id) {
+		return  repo.findById(id).getPosicion();
+	}
+
+	@RequestMapping(value="/{id}/posicion", method = RequestMethod.PUT)
+	public ResponseEntity<?> setUserPosition(@PathVariable("id") String id, @RequestBody Position nuevaPosicion) {
+		Usuario user = repo.findById(id);
+		user.setPosicion(nuevaPosicion);
+		repo.save(user);
+		return ResponseEntity.ok("");
+	}
+
+	@RequestMapping(value="/buscar", method = RequestMethod.GET)
+	public List<Usuario> findUserByName(@RequestParam("username") String username) {
+		return repo.findyByUsernameStartsWith(username);
 	}
 
 	@RequestMapping(value="/roles", method = RequestMethod.GET)

@@ -36,6 +36,9 @@ public class Usuario implements UserDetails {
 	@JsonIgnore
 	private List<Usuario> amigos;
 
+	@JsonIgnore
+	private Position posicion;
+
 	private static final long serialVersionUID = -3861374349926843566L;
 
 	//CONSTRUCTOR
@@ -178,5 +181,18 @@ public class Usuario implements UserDetails {
 
 	public void removeAmigo(Usuario a) {
 		this.amigos.remove(a);
+	}
+
+	/**
+	 * @return the posicion
+	 */
+	public Position getPosicion() {
+		return posicion;
+	}
+	/**
+	 * @param posicion the posicion to set
+	 */
+	public void setPosicion(Position posicion) {
+		this.posicion = posicion;
 	}
 }

@@ -10,6 +10,7 @@ public class Comercio {
     private String id;
     public String nombre;
     public List<ItemComercio> productos;
+    public Position posicion;
 
     public Comercio() {}
 
@@ -47,5 +48,18 @@ public class Comercio {
      */
     public void setProductos(List<ItemComercio> productos) {
         this.productos = productos;
+    }
+
+    /**
+     * @return the posicion
+     */
+    public Position getPosicion() {
+        return posicion;
+    }
+    /**
+     * @param posicion the posicion to set
+     */
+    public void setPosicion(Position posicion) {
+        this.posicion = posicion;
     }
 }
