@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.content.commons.annotations.ContentId;
+import org.springframework.content.commons.annotations.ContentLength;
+import org.springframework.content.commons.annotations.MimeType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
@@ -16,6 +19,13 @@ public class Espectaculo {
 	@DBRef
 	private Establecimiento establecimiento;
 	private List<Comercio> comercios;
+
+	@ContentId
+    private String contentId;
+    @ContentLength
+    private long contentLength;
+    @MimeType
+    private String mimeType = "text/plain";
 
 	public Espectaculo(String unNombre) {
 		nombre = unNombre;
@@ -89,4 +99,40 @@ public class Espectaculo {
 		}
 		return result;
 	}
+
+	public String getContentId() {
+        return contentId;
+    }
+    /**
+     * @param contentId the contentId to set
+     */
+    public void setContentId(String contentId) {
+        this.contentId = contentId;
+    }
+
+    /**
+     * @return the contentLength
+     */
+    public long getContentLength() {
+        return contentLength;
+    }
+    /**
+     * @param contentLength the contentLength to set
+     */
+    public void setContentLength(long contentLength) {
+        this.contentLength = contentLength;
+	}
+	 /**
+     * @return the mimeType
+     */
+    public String getMimeType() {
+        return mimeType;
+    }
+
+    /**
+     * @param mimeType the mimeType to set
+     */
+    public void setMimeType(String mimeType) {
+        this.mimeType = mimeType;
+    }
 }

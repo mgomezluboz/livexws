@@ -68,6 +68,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.DELETE, "/usuarios/**/friends/**").authenticated()
             .antMatchers(HttpMethod.GET, "/usuarios/**/posicion/**").authenticated()
             .antMatchers(HttpMethod.PUT, "/usuarios/**/posicion/**").authenticated()
+            .antMatchers(HttpMethod.GET, "/usuarios/**/profilePicture/**").authenticated()
+            .antMatchers(HttpMethod.PUT, "/usuarios/**/profilePicture/**").authenticated()
             .antMatchers(HttpMethod.POST, "/usuarios/**").hasAuthority("ROLE_ADMIN")
             .antMatchers(HttpMethod.PUT, "/usuarios/**").hasAuthority("ROLE_ADMIN")
             .antMatchers(HttpMethod.GET, "/usuarios/**").hasAuthority("ROLE_ADMIN")

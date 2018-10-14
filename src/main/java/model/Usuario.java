@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import org.springframework.content.commons.annotations.ContentId;
+import org.springframework.content.commons.annotations.ContentLength;
+import org.springframework.content.commons.annotations.MimeType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,6 +41,16 @@ public class Usuario implements UserDetails {
 
 	@JsonIgnore
 	private Position posicion;
+
+	@JsonIgnore
+	private List<Espectaculo> espectaculosAsistidos;
+
+	@ContentId
+    private String contentId;
+    @ContentLength
+    private long contentLength;
+    @MimeType
+    private String mimeType = "text/plain";
 
 	private static final long serialVersionUID = -3861374349926843566L;
 
@@ -194,5 +207,57 @@ public class Usuario implements UserDetails {
 	 */
 	public void setPosicion(Position posicion) {
 		this.posicion = posicion;
+	}
+
+	public String getContentId() {
+        return contentId;
+    }
+    /**
+     * @param contentId the contentId to set
+     */
+    public void setContentId(String contentId) {
+        this.contentId = contentId;
+    }
+
+    /**
+     * @return the contentLength
+     */
+    public long getContentLength() {
+        return contentLength;
+    }
+    /**
+     * @param contentLength the contentLength to set
+     */
+    public void setContentLength(long contentLength) {
+        this.contentLength = contentLength;
+	}
+	 /**
+     * @return the mimeType
+     */
+    public String getMimeType() {
+        return mimeType;
+    }
+
+    /**
+     * @param mimeType the mimeType to set
+     */
+    public void setMimeType(String mimeType) {
+        this.mimeType = mimeType;
+	}
+	
+	/**
+	 * @param espectaculosAsistidos the espectaculosAsistidos to set
+	 */
+	public void setEspectaculosAsistidos(List<Espectaculo> espectaculosAsistidos) {
+		this.espectaculosAsistidos = espectaculosAsistidos;
+	}
+	/**
+	 * @return the espectaculosAsistidos
+	 */
+	public List<Espectaculo> getEspectaculosAsistidos() {
+		return espectaculosAsistidos;
+	}
+	public void addEspectaculoAsistido(Espectaculo espec) {
+		this.espectaculosAsistidos.add(espec);
 	}
 }

@@ -1,11 +1,15 @@
 package ws;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import exceptions.UserNotFoundException;
 
@@ -25,6 +30,10 @@ public class UserController extends AbstractController{
 	
 	@Autowired
 	private UsuarioRepository repo;
+
+	@Autowired private UsuarioStore contentStore;
+
+	@Autowired private EspectaculoRepository repoEspectaculos;
 	
 	@RequestMapping(value="/crearDb", method = RequestMethod.POST)
 	public String crearUsuarioDb() {
@@ -148,5 +157,53 @@ public class UserController extends AbstractController{
 		result.add(admin);
 		result.add(user);
 		return(result);
+	}
+
+	@RequestMapping(value="/{id}/profilePicture", method = RequestMethod.GET)
+	public ResponseEntity<?> getContent(@PathVariable("id") String id) {
+
+        Usuario f = repo.findById(id);
+        if (null != f) {
+            InputStreamResource inputStreamResource = new InputStreamResource(contentStore.getContent(f));
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentLength(f.getContentLength());
+            headers.set("Content-Type", f.getMimeType());
+            return new ResponseEntity<Object>(inputStreamResource, headers, HttpStatus.OK);
+        }
+        return null;
+	}
+	
+	@RequestMapping(value="/{id}/profilePicture", method = RequestMethod.PUT)
+    public ResponseEntity<?> setContent(@PathVariable("id") String id, @RequestParam("file") MultipartFile file)
+            throws IOException {
+
+				Usuario f = repo.findById(id);
+        if (null != f) {
+            f.setMimeType(file.getContentType());
+
+            contentStore.setContent(f, file.getInputStream());
+
+            // save updated content-related info
+            repo.save(f);
+
+            return new ResponseEntity<Object>(HttpStatus.OK);
+        }
+        return null;
+	}
+	
+	@RequestMapping(value="/{id}/espectaculos", method = RequestMethod.GET)
+	public List<Espectaculo> getEspectaculosAsistidos(@PathVariable("id") String id) {
+		return repo.findById(id).getEspectaculosAsistidos();
+	}
+
+	@RequestMapping(value="/{id}/espectaculos/{especId}", method = RequestMethod.POST)
+	public ResponseEntity<?> addEspectaculoAsistido(@PathVariable("id") String id, @PathVariable("especId") String especId) {
+		Usuario user = repo.findById(id);
+		Espectaculo espec = repoEspectaculos.findById(especId);
+
+		user.addEspectaculoAsistido(espec);
+		repo.save(user);
+
+		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 }
