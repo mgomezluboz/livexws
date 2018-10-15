@@ -145,7 +145,7 @@ public class UserController extends AbstractController{
 
 	@RequestMapping(value="/buscar", method = RequestMethod.GET)
 	public List<Usuario> findUserByName(@RequestParam("username") String username) {
-		return repo.findyByUsernameStartsWith(username);
+		return repo.usernameStartsWith(username);
 	}
 
 	@RequestMapping(value="/roles", method = RequestMethod.GET)
