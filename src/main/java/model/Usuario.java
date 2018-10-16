@@ -32,11 +32,11 @@ public class Usuario implements UserDetails {
 	private Rol rol;
 	private Date ultimaSesion;
 	
-	@DBRef
+	@DBRef(lazy = true)
 	@JsonIgnore
 	private List<Publicacion> publicaciones;
 
-	@DBRef
+	@DBRef(lazy = true)
 	@JsonIgnore
 	private List<Usuario> amigos;
 
