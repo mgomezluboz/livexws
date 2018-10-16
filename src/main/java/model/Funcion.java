@@ -17,6 +17,8 @@ public class Funcion {
     private String artista;
     private String setList;
 
+    private String imagenRef = "";
+
     public Funcion() {
 
     }
@@ -54,6 +56,19 @@ public class Funcion {
      */
     public String getSetList() {
         return setList;
+    }
+
+    /**
+     * @return the imagenRef
+     */
+    public String getImagenRef() {
+        return imagenRef;
+    }
+    /**
+     * @param imagenRef the imagenRef to set
+     */
+    public void setImagenRef(String imagenRef) {
+        this.imagenRef = imagenRef;
     }
 
     @Override

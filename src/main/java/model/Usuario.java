@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -45,11 +46,11 @@ public class Usuario implements UserDetails {
 	@JsonIgnore
 	private List<Espectaculo> espectaculosAsistidos;
 
-	@ContentId
+	@ContentId @JsonIgnore
     private String contentId;
-    @ContentLength
+    @ContentLength @JsonIgnore
     private long contentLength;
-    @MimeType
+    @MimeType @JsonIgnore
     private String mimeType = "text/plain";
 
 	private static final long serialVersionUID = -3861374349926843566L;
@@ -60,6 +61,9 @@ public class Usuario implements UserDetails {
 
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		password = encoder.encode(unaPass);
+
+		amigos = new ArrayList<Usuario>();
+		espectaculosAsistidos = new ArrayList<Espectaculo>();
 	}
 
 	public Usuario(String name) {

@@ -2,6 +2,7 @@ package model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.content.commons.annotations.ContentId;
@@ -20,11 +21,11 @@ public class Espectaculo {
 	private Establecimiento establecimiento;
 	private List<Comercio> comercios;
 
-	@ContentId
+	@ContentId @JsonIgnore
     private String contentId;
-    @ContentLength
+    @ContentLength @JsonIgnore
     private long contentLength;
-    @MimeType
+    @MimeType @JsonIgnore
     private String mimeType = "text/plain";
 
 	public Espectaculo(String unNombre) {

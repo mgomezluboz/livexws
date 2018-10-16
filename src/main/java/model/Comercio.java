@@ -11,6 +11,7 @@ public class Comercio {
     public String nombre;
     public List<ItemComercio> productos;
     public Position posicion;
+    public String imagenRef = "";
 
     public Comercio() {}
 
@@ -61,5 +62,18 @@ public class Comercio {
      */
     public void setPosicion(Position posicion) {
         this.posicion = posicion;
+    }
+
+    /**
+     * @param imagenRef the imagenRef to set
+     */
+    public void setImagenRef(String imagenRef) {
+        this.imagenRef = imagenRef;
+    }
+    /**
+     * @return the imagenRef
+     */
+    public String getImagenRef() {
+        return imagenRef;
     }
 }
