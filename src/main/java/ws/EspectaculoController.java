@@ -3,6 +3,7 @@ package ws;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import model.Espectaculo;
-
+import model.EspectaculoAtendido;
+import model.Usuario;
+import util.ControllerUtils;
 import ws.EspectaculoRepository;
 
 @RestController
@@ -34,9 +37,26 @@ public class EspectaculoController extends AbstractController {
 	@Autowired private EspectaculoStore contentStore;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<Espectaculo> getEspectaculos() {
+	public List<EspectaculoAtendido> getEspectaculos() {
 		logger.info("getEspectaculos()");
-		return repo.findAll();
+
+		List<Espectaculo> listado =  repo.findAll();
+		Usuario user = ControllerUtils.getUserFromContext();
+		List<EspectaculoAtendido> result = new ArrayList<>();
+		Boolean atendido;
+		EspectaculoAtendido especAt;
+
+		for(Espectaculo espec : listado) {
+			atendido = false;
+			if (user.getEspectaculosAsistidos().contains(espec)) {
+				atendido = true;
+			}
+			especAt = new EspectaculoAtendido();
+			especAt.setHasBeenTo(atendido);
+			result.add(especAt);
+		}
+
+		return result;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

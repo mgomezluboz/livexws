@@ -102,6 +102,11 @@ public class UserController extends AbstractController{
 	public List<Publicacion> getUserPosts(@PathVariable("id") String id) {
 		return repo.findById(id).getPublicaciones();
 	}
+
+	@RequestMapping(value="/{id}/feed", method = RequestMethod.GET)
+	public List<Publicacion> getFeed(@PathVariable("id") String id) {
+		return repo.findById(id).getPublicaciones();
+	}
 	
 	// Crear nuevo usuario
 	@RequestMapping(method = RequestMethod.POST)

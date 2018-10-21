@@ -66,6 +66,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.GET, "/usuarios/**/buscar/**").authenticated()
             .antMatchers(HttpMethod.POST, "/usuarios/**/friends/**").authenticated()
             .antMatchers(HttpMethod.GET, "/usuarios/**/friends/**").authenticated()
+            .antMatchers(HttpMethod.GET, "/usuarios/**/posts/**").authenticated()
             .antMatchers(HttpMethod.DELETE, "/usuarios/**/friends/**").authenticated()
             .antMatchers(HttpMethod.POST, "/usuarios/**/espectaculos/**").authenticated()
             .antMatchers(HttpMethod.GET, "/usuarios/**/espectaculos/**").authenticated()
@@ -75,7 +76,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.PUT, "/usuarios/**/profilePicture/**").authenticated()
             .antMatchers(HttpMethod.POST, "/usuarios/**").hasAuthority("ROLE_ADMIN")
             .antMatchers(HttpMethod.PUT, "/usuarios/**").hasAuthority("ROLE_ADMIN")
-            .antMatchers(HttpMethod.GET, "/usuarios/**").hasAuthority("ROLE_ADMIN")
+            .antMatchers(HttpMethod.GET, "/usuarios/**").authenticated()
             .antMatchers(HttpMethod.DELETE, "/usuarios/**").hasAuthority("ROLE_ADMIN")
             .antMatchers("/js/**").permitAll()
             .anyRequest().authenticated();

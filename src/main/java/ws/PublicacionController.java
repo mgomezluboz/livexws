@@ -1,11 +1,16 @@
 package ws;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import model.*;
+import util.ControllerUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,11 +28,33 @@ public class PublicacionController extends AbstractController {
 	private PublicacionRepository repo;
 
 	@Autowired private UsuarioRepository userRepo;
+	@Autowired private EspectaculoRepository especRepo;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public List<Publicacion> getPublicaciones() {
+	public List<PublicacionConProp> getPublicaciones() {
 		logger.info("getPublicaciones()");
-		return repo.findAll();
+
+		List<Publicacion> listado =  repo.findAll();
+		Usuario user = ControllerUtils.getUserFromContext();
+		List<PublicacionConProp> result = new ArrayList<>();
+		Boolean mine;
+		PublicacionConProp pConProp;
+
+		for(Publicacion pub : listado) {
+			mine = false;
+			pConProp = new PublicacionConProp();
+			if (pub.getUserId() == user.getId()) {
+				mine = true;
+				pConProp.setUsername(user.getUsername());
+			} else {
+				pConProp.setUsername(userRepo.findById(pub.getUserId()).getUsername());
+			}
+			pConProp.setEspectaculoName(especRepo.findById(pub.getEventoId()).getNombre());
+			pConProp.setIsMine(mine);
+			result.add(pConProp);
+		}
+
+		return result;
 	}	
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
