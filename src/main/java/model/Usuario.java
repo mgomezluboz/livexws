@@ -79,6 +79,9 @@ public class Usuario implements UserDetails {
 	}
 
 	public void addPublicacion(Publicacion s) {
+		if (null == this.publicaciones) {
+			this.publicaciones = new ArrayList<>();
+		}
 		publicaciones.add(s);
 	}
 
