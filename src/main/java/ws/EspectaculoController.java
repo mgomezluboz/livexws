@@ -3,6 +3,7 @@ package ws;
 
 import java.io.IOException;
 import java.net.URI;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,8 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import model.Espectaculo;
-import model.EspectaculoAtendido;
 import model.Usuario;
-import util.ControllerUtils;
 import ws.EspectaculoRepository;
 
 @RestController
@@ -35,28 +36,28 @@ public class EspectaculoController extends AbstractController {
 	@Autowired
 	private EspectaculoRepository repo;
 	@Autowired private EspectaculoStore contentStore;
+	@Autowired private UsuarioRepository userRepo;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<EspectaculoAtendido> getEspectaculos() {
+	public List<Espectaculo> getEspectaculos(Principal principal) {
 		logger.info("getEspectaculos()");
 
 		List<Espectaculo> listado =  repo.findAll();
-		Usuario user = ControllerUtils.getUserFromContext();
-		List<EspectaculoAtendido> result = new ArrayList<>();
+		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		Usuario user = userRepo.findByUsername(userDetails.getUsername());
+
 		Boolean atendido;
-		EspectaculoAtendido especAt;
 
 		for(Espectaculo espec : listado) {
 			atendido = false;
 			if (user.getEspectaculosAsistidos().contains(espec)) {
 				atendido = true;
 			}
-			especAt = new EspectaculoAtendido();
-			especAt.setHasBeenTo(atendido);
-			result.add(especAt);
+			espec.setHasBeenTo(atendido);
 		}
 
-		return result;
+		return listado;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

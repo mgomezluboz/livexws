@@ -2,6 +2,9 @@ package model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.springframework.content.commons.annotations.ContentId;
 import org.springframework.content.commons.annotations.ContentLength;
 import org.springframework.content.commons.annotations.MimeType;
@@ -16,6 +19,10 @@ public class Publicacion {
     public Date created = new Date();
     public String userId;
     public String eventoId;
+
+    private Boolean isMine = false;
+    private String username = "";
+    private String espectaculoName = "";
 
     @ContentId
     private String contentId;
@@ -131,6 +138,47 @@ public class Publicacion {
      */
     public void setEventoId(String eventoId) {
         this.eventoId = eventoId;
+    }
+
+        /**
+     * @return the isMine
+     */
+    public Boolean getIsMine() {
+        return isMine;
+    }
+    /**
+     * @param isMine the isMine to set
+     */
+    public void setIsMine(Boolean isMine) {
+        this.isMine = isMine;
+    }
+
+    /**
+     * @return the username
+     */
+    @JsonProperty("username")
+    public String getUsername() {
+        return username;
+    }
+    /**
+     * @param username the username to set
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     * @return the espectaculoName
+     */
+    @JsonProperty("espectaculoName")
+    public String getEspectaculoName() {
+        return espectaculoName;
+    }
+    /**
+     * @param espectaculoName the espectaculoName to set
+     */
+    public void setEspectaculoName(String espectaculoName) {
+        this.espectaculoName = espectaculoName;
     }
 
 }

@@ -21,6 +21,8 @@ public class Espectaculo {
 	private Establecimiento establecimiento;
 	private List<Comercio> comercios;
 
+	public Boolean hasBeenTo;
+
 	@ContentId @JsonIgnore
     private String contentId;
     @ContentLength @JsonIgnore
@@ -100,6 +102,19 @@ public class Espectaculo {
 		}
 		return result;
 	}
+
+	/**
+     * @return the hasBeenTo
+     */
+    public Boolean getHasBeenTo() {
+        return hasBeenTo;
+    }
+    /**
+     * @param hasBeenTo the hasBeenTo to set
+     */
+    public void setHasBeenTo(Boolean hasBeenTo) {
+        this.hasBeenTo = hasBeenTo;
+    }
 
 	public String getContentId() {
         return contentId;

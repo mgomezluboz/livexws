@@ -68,10 +68,14 @@ public class Usuario implements UserDetails {
 
 	public Usuario(String name) {
 		username = name;
+		amigos = new ArrayList<Usuario>();
+		espectaculosAsistidos = new ArrayList<Espectaculo>();
 	}
 	
 	public Usuario() {
 		super();
+		amigos = new ArrayList<Usuario>();
+		espectaculosAsistidos = new ArrayList<Espectaculo>();
 	}
 
 	public void addPublicacion(Publicacion s) {
@@ -184,6 +188,9 @@ public class Usuario implements UserDetails {
 	 * @return the amigos
 	 */
 	public List<Usuario> getAmigos() {
+		if (null == this.amigos) {
+			this.amigos = new ArrayList<>();
+		}
 		return amigos;
 	}
 	/**
@@ -259,6 +266,9 @@ public class Usuario implements UserDetails {
 	 * @return the espectaculosAsistidos
 	 */
 	public List<Espectaculo> getEspectaculosAsistidos() {
+		if (null == this.espectaculosAsistidos) {
+			this.espectaculosAsistidos = new ArrayList<>();
+		}
 		return espectaculosAsistidos;
 	}
 	public void addEspectaculoAsistido(Espectaculo espec) {

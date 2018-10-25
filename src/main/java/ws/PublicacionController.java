@@ -1,6 +1,7 @@
 package ws;
 
 import java.net.URI;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,30 +32,36 @@ public class PublicacionController extends AbstractController {
 	@Autowired private EspectaculoRepository especRepo;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public List<PublicacionConProp> getPublicaciones() {
+	public List<Publicacion> getPublicaciones(Principal principal) {
 		logger.info("getPublicaciones()");
 
 		List<Publicacion> listado =  repo.findAll();
-		Usuario user = ControllerUtils.getUserFromContext();
-		List<PublicacionConProp> result = new ArrayList<>();
+		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Usuario user = userRepo.findByUsername(userDetails.getUsername());
+
 		Boolean mine;
-		PublicacionConProp pConProp;
 
 		for(Publicacion pub : listado) {
 			mine = false;
-			pConProp = new PublicacionConProp();
-			if (pub.getUserId() == user.getId()) {
+			logger.info("Pub id: " + pub.getUserId() + " ---- User id: " + user.getId());
+			if (null != pub.getUserId() && pub.getUserId().equals(user.getId())) {
 				mine = true;
-				pConProp.setUsername(user.getUsername());
-			} else {
-				pConProp.setUsername(userRepo.findById(pub.getUserId()).getUsername());
 			}
-			pConProp.setEspectaculoName(especRepo.findById(pub.getEventoId()).getNombre());
-			pConProp.setIsMine(mine);
-			result.add(pConProp);
+
+			pub.setUsername(userDetails.getUsername());
+
+			Espectaculo espectaculo = especRepo.findById(pub.getEventoId());
+
+			if (null != espectaculo) {
+				pub.setEspectaculoName(espectaculo.getNombre());
+			} else {
+				pub.setEspectaculoName("NULL event");
+			}
+			
+			pub.setIsMine(mine);
 		}
 
-		return result;
+		return listado;
 	}	
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)

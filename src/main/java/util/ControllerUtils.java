@@ -1,7 +1,8 @@
 package util;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import model.Usuario;
@@ -11,15 +12,14 @@ public class ControllerUtils {
 
     @Autowired private static UsuarioRepository repo;
 
-    public static Usuario getUserFromContext() {
+    public static Usuario getUserFromContext(Principal principal) {
 
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username;
 
 		if (principal instanceof UserDetails) {
 			username = ((UserDetails)principal).getUsername();
 		} else {
-			username = principal.toString();
+			username = principal.getName();
 		}
 
 		return repo.findByUsername(username);
