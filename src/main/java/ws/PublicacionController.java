@@ -43,7 +43,6 @@ public class PublicacionController extends AbstractController {
 
 		for(Publicacion pub : listado) {
 			mine = false;
-			logger.info("Pub id: " + pub.getUserId() + " ---- User id: " + user.getId());
 			if (null != pub.getUserId() && pub.getUserId().equals(user.getId())) {
 				mine = true;
 			}
@@ -71,7 +70,7 @@ public class PublicacionController extends AbstractController {
 
 	}
 	
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<?> addPublicacion(@RequestBody Publicacion pub) {
 		logger.info("addPublicacion()");
 		repo.insert(pub);
@@ -80,7 +79,7 @@ public class PublicacionController extends AbstractController {
 		user.addPublicacion(pub);
 		userRepo.save(user);
 
-		return ResponseEntity.created(URI.create("http://localhost")).body("{\"message\": \"Creada con exito.\"}");
+		return ResponseEntity.created(URI.create("http://localhost")).body("{\"message\": \"Creada con exito.\", \"id\": \"" + pub.getId() + "\"}");
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
