@@ -3,6 +3,7 @@ package ws;
 import java.net.URI;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import model.*;
@@ -38,6 +39,7 @@ public class PublicacionController extends AbstractController {
 		List<Publicacion> listado =  repo.findAll();
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Usuario user = userRepo.findByUsername(userDetails.getUsername());
+		List<Espectaculo> espectaculos = especRepo.findAll();
 
 		Boolean mine;
 
@@ -49,7 +51,12 @@ public class PublicacionController extends AbstractController {
 
 			pub.setUsername(userDetails.getUsername());
 
-			Espectaculo espectaculo = especRepo.findById(pub.getEventoId());
+			Espectaculo espectaculo = null;
+			for (Espectaculo e : espectaculos) {
+				if(e.getId().equals(pub.getEventoId())) {
+					espectaculo = e;
+				}
+			}
 
 			if (null != espectaculo) {
 				pub.setEspectaculoName(espectaculo.getNombre());
