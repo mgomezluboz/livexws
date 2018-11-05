@@ -89,7 +89,19 @@ public class Espectaculo {
 		this.comercios = comercios;
 	}
 	
-	public void addComercio(Comercio c) {
+	public void addComercio(Comercio c) throws Exception {
+		Boolean yaExiste = false;
+
+		for (Comercio comercioFor : this.comercios) {
+			if (comercioFor.nombre.equals(c.getNombre())) {
+				yaExiste = true;
+			}
+		}
+
+		if (yaExiste) {
+			throw new Exception("Ese comercio ya existe.");
+		}
+
 		this.comercios.add(c);
 	}
 
