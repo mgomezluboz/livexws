@@ -3,6 +3,7 @@ package ws;
 import java.net.URI;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -67,6 +68,8 @@ public class PublicacionController extends AbstractController {
 			pub.setIsMine(mine);
 		}
 
+		Collections.reverse(listado);
+
 		return listado;
 	}	
 	
@@ -83,6 +86,9 @@ public class PublicacionController extends AbstractController {
 		repo.insert(pub);
 
 		Usuario user = userRepo.findById(pub.userId);
+		if (user.sosAdmin()) {
+			pub.setAdmin(true);
+		}
 		user.addPublicacion(pub);
 		userRepo.save(user);
 

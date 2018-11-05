@@ -2,14 +2,14 @@ package model;
 
 public class Position {
 
-    public Float longitud;
-    public Float latitud;
+    public Double longitud;
+    public Double latitud;
 
     public Position() {
 
     }
 
-    public Position(Float x, Float y) {
+    public Position(Double x, Double y) {
         longitud = x;
         latitud = y;
     }
@@ -17,25 +17,25 @@ public class Position {
     /**
      * @param longitud the longitud to set
      */
-    public void setLongitud(Float longitud) {
+    public void setLongitud(Double longitud) {
         this.longitud = longitud;
     }
     /**
      * @return the longitud
      */
-    public Float getLongitud() {
+    public Double getLongitud() {
         return longitud;
     }
     /**
      * @param latitud the latitud to set
      */
-    public void setLatitud(Float latitud) {
+    public void setLatitud(Double latitud) {
         this.latitud = latitud;
     }
     /**
      * @return the latitud
      */
-    public Float getLatitud() {
+    public Double getLatitud() {
         return latitud;
     }
 

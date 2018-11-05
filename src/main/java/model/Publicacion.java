@@ -22,6 +22,7 @@ public class Publicacion {
     private Boolean isMine = false;
     private String username = "";
     private String espectaculoName = "";
+    private Boolean admin = false;
 
     @ContentId
     private String contentId;
@@ -178,6 +179,19 @@ public class Publicacion {
      */
     public void setEspectaculoName(String espectaculoName) {
         this.espectaculoName = espectaculoName;
+    }
+
+    /**
+     * @param admin the admin to set
+     */
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
+    }
+    /**
+     * @return the admin
+     */
+    public Boolean getAdmin() {
+        return admin;
     }
 
 }

@@ -8,7 +8,6 @@ public class ItemComercio {
     private String id;
     public String nombre;
     public Float precio;
-    public Integer stock;
 
     /**
      * @return the nombre
@@ -33,16 +32,5 @@ public class ItemComercio {
      */
     public void setPrecio(Float precio) {
         this.precio = precio;
-    }/**
-     * @return the stock
-     */
-    public Integer getStock() {
-        return stock;
-    }
-    /**
-     * @param stock the stock to set
-     */
-    public void setStock(Integer stock) {
-        this.stock = stock;
     }
 }

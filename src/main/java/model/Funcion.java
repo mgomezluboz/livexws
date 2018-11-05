@@ -14,6 +14,7 @@ public class Funcion {
     public String id;
     @DateTimeFormat(iso = ISO.DATE_TIME)
     private Date fecha;
+    private String hora;
     private String artista;
     private String setList;
 
@@ -69,6 +70,19 @@ public class Funcion {
      */
     public void setImagenRef(String imagenRef) {
         this.imagenRef = imagenRef;
+    }
+
+    /**
+     * @return the hora
+     */
+    public String getHora() {
+        return hora;
+    }
+    /**
+     * @param hora the hora to set
+     */
+    public void setHora(String hora) {
+        this.hora = hora;
     }
 
     @Override

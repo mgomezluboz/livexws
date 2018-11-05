@@ -31,6 +31,7 @@ public class Usuario implements UserDetails {
 	private String password;
 	private Rol rol;
 	private Date ultimaSesion;
+	private Integer friendStatus = 0;
 	
 	@DBRef(lazy = true)
 	@JsonIgnore
@@ -39,6 +40,14 @@ public class Usuario implements UserDetails {
 	@DBRef(lazy = true)
 	@JsonIgnore
 	private List<Usuario> amigos;
+
+	@DBRef(lazy = true)
+	@JsonIgnore
+	private List<Usuario> amigosPendientes;
+
+	@DBRef(lazy = true)
+	@JsonIgnore
+	private List<Usuario> amigosSolicitados;
 
 	@JsonIgnore
 	private Position posicion;
@@ -63,18 +72,24 @@ public class Usuario implements UserDetails {
 		password = encoder.encode(unaPass);
 
 		amigos = new ArrayList<Usuario>();
+		amigosPendientes = new ArrayList<Usuario>();
+		amigosSolicitados = new ArrayList<Usuario>();
 		espectaculosAsistidos = new ArrayList<Espectaculo>();
 	}
 
 	public Usuario(String name) {
 		username = name;
 		amigos = new ArrayList<Usuario>();
+		amigosPendientes = new ArrayList<Usuario>();
+		amigosSolicitados = new ArrayList<Usuario>();
 		espectaculosAsistidos = new ArrayList<Espectaculo>();
 	}
 	
 	public Usuario() {
 		super();
 		amigos = new ArrayList<Usuario>();
+		amigosPendientes = new ArrayList<Usuario>();
+		amigosSolicitados = new ArrayList<Usuario>();
 		espectaculosAsistidos = new ArrayList<Espectaculo>();
 	}
 
@@ -210,6 +225,46 @@ public class Usuario implements UserDetails {
 		this.amigos.remove(a);
 	}
 
+	public List<Usuario> getAmigosPendientes() {
+		if (null == this.amigosPendientes) {
+			this.amigosPendientes = new ArrayList<>();
+		}
+		return amigosPendientes;
+	}
+	/**
+	 * @param amigos the amigos to set
+	 */
+	public void setAmigosPendientes(List<Usuario> amigos) {
+		this.amigosPendientes = amigos;
+	}
+	public void addAmigosPendientes(Usuario a) {
+		this.amigosPendientes.add(a);
+	}
+
+	public void removeAmigoPendientes(Usuario a) {
+		this.amigosPendientes.remove(a);
+	}
+
+	public List<Usuario> getAmigosSolicitados() {
+		if (null == this.amigosSolicitados) {
+			this.amigos = new ArrayList<>();
+		}
+		return amigosSolicitados;
+	}
+	/**
+	 * @param amigos the amigos to set
+	 */
+	public void setAmigosSolicitados(List<Usuario> amigos) {
+		this.amigosSolicitados = amigos;
+	}
+	public void addAmigosSolicitados(Usuario a) {
+		this.amigosSolicitados.add(a);
+	}
+
+	public void removeAmigoSolicitados(Usuario a) {
+		this.amigosSolicitados.remove(a);
+	}
+
 	/**
 	 * @return the posicion
 	 */
@@ -276,5 +331,17 @@ public class Usuario implements UserDetails {
 	}
 	public void addEspectaculoAsistido(Espectaculo espec) {
 		this.espectaculosAsistidos.add(espec);
+	}
+	/**
+	 * @param friendStatus the friendStatus to set
+	 */
+	public void setFriendStatus(Integer friendStatus) {
+		this.friendStatus = friendStatus;
+	}
+	/**
+	 * @return the friendStatus
+	 */
+	public Integer getFriendStatus() {
+		return friendStatus;
 	}
 }

@@ -22,6 +22,7 @@ public class Espectaculo {
 	private List<Comercio> comercios;
 
 	public Boolean hasBeenTo;
+	private String linkCompra;
 
 	@ContentId @JsonIgnore
     private String contentId;
@@ -150,5 +151,18 @@ public class Espectaculo {
      */
     public void setMimeType(String mimeType) {
         this.mimeType = mimeType;
-    }
+	}
+	
+	/**
+	 * @return the linkCompra
+	 */
+	public String getLinkCompra() {
+		return linkCompra;
+	}
+	/**
+	 * @param linkCompra the linkCompra to set
+	 */
+	public void setLinkCompra(String linkCompra) {
+		this.linkCompra = linkCompra;
+	}
 }

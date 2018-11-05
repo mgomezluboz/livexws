@@ -3,6 +3,7 @@ package ws;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import model.*;
@@ -11,6 +12,8 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +37,7 @@ public class UserController extends AbstractController{
 	@Autowired private UsuarioStore contentStore;
 
 	@Autowired private EspectaculoRepository repoEspectaculos;
+	@Autowired private PublicacionRepository repoPublicaciones;
 	
 	@RequestMapping(value="/crearDb", method = RequestMethod.POST)
 	public String crearUsuarioDb() {
@@ -82,10 +86,19 @@ public class UserController extends AbstractController{
 			f.setAmigos(new ArrayList<Usuario>());
 		}
 
-		u.addAmigos(f);
-		f.addAmigos(u);
-		repo.save(u);
-		repo.save(f);
+		if (u.getAmigosPendientes().contains(f)) {
+			u.addAmigos(f);
+			f.addAmigos(u);
+			u.removeAmigoPendientes(f);
+			f.removeAmigoSolicitados(u);
+			repo.save(u);
+			repo.save(f);
+		} else {
+			f.addAmigosPendientes(u);
+			u.addAmigosSolicitados(f);
+			repo.save(u);
+			repo.save(f);
+		}
 		return ResponseEntity.ok("");
 	}
 
@@ -105,7 +118,26 @@ public class UserController extends AbstractController{
 
 	@RequestMapping(value="/{id}/feed", method = RequestMethod.GET)
 	public List<Publicacion> getFeed(@PathVariable("id") String id) {
-		return repo.findById(id).getPublicaciones();
+
+		Usuario user = repo.findById(id);
+		List<Publicacion> allPubs = repoPublicaciones.findAll();
+		Collections.reverse(allPubs);
+		List<Publicacion> result = new ArrayList<>();
+		List<Usuario> friendList = user.getAmigos();
+		friendList.add(user);
+		List<String> friendIdList = new ArrayList<>();
+
+		for (Usuario u : friendList) {
+			friendIdList.add(u.getId());
+		}
+
+		for(Publicacion p : allPubs) {
+			if(p.getAdmin() || friendIdList.contains(p.getUserId())) {
+				result.add(p);
+			}
+		}
+
+		return result;
 	}
 	
 	// Crear nuevo usuario
@@ -165,7 +197,23 @@ public class UserController extends AbstractController{
 
 	@RequestMapping(value="/buscar", method = RequestMethod.GET)
 	public List<Usuario> findUserByName(@RequestParam("username") String username) {
-		return repo.usernameStartsWith(username);
+		List<Usuario> result = repo.usernameStartsWith(username);
+		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Usuario user = repo.findByUsername(userDetails.getUsername());
+
+		for (Usuario u : result) {
+			if(user.getAmigos().contains(u)) {
+				u.setFriendStatus(1);
+			} else if (user.getAmigosPendientes().contains(u)) {
+				u.setFriendStatus(2);
+			} else if (user.getAmigosSolicitados().contains(u)) {
+				u.setFriendStatus(3);
+			} else {
+				u.setFriendStatus(0);
+			}
+		}
+
+		return result;
 	}
 
 	@RequestMapping(value="/roles", method = RequestMethod.GET)
