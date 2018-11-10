@@ -38,6 +38,7 @@ public class UserController extends AbstractController{
 
 	@Autowired private EspectaculoRepository repoEspectaculos;
 	@Autowired private PublicacionRepository repoPublicaciones;
+	@Autowired private PublicacionController pubController;
 	
 	@RequestMapping(value="/crearDb", method = RequestMethod.POST)
 	public String crearUsuarioDb() {
@@ -93,6 +94,10 @@ public class UserController extends AbstractController{
 			f.removeAmigoSolicitados(u);
 			repo.save(u);
 			repo.save(f);
+		} else if(u.getAmigos().contains(f)) {
+			//ya son amigos
+		} else if(u.getAmigosSolicitados().contains(f)) {
+			//ya esta en la lista de solicitados
 		} else {
 			f.addAmigosPendientes(u);
 			u.addAmigosSolicitados(f);
@@ -107,7 +112,9 @@ public class UserController extends AbstractController{
 		Usuario u = repo.findById(id);
 		Usuario f = repo.findById(fid);
 		u.removeAmigo(f);
+		f.removeAmigo(u);
 		repo.save(u);
+		repo.save(f);
 		return ResponseEntity.ok("");
 	}
 
@@ -120,7 +127,7 @@ public class UserController extends AbstractController{
 	public List<Publicacion> getFeed(@PathVariable("id") String id) {
 
 		Usuario user = repo.findById(id);
-		List<Publicacion> allPubs = repoPublicaciones.findAll();
+		List<Publicacion> allPubs = pubController.getPublicaciones();
 		Collections.reverse(allPubs);
 		List<Publicacion> result = new ArrayList<>();
 		List<Usuario> friendList = user.getAmigos();
@@ -201,15 +208,25 @@ public class UserController extends AbstractController{
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Usuario user = repo.findByUsername(userDetails.getUsername());
 
+		logger.info("El usuario que busca es: " + user.getUsername());
+
+		List<Usuario> amigosPendientes = user.getAmigosPendientes();
+		List<Usuario> amigosSolicitados = user.getAmigosSolicitados();
+		List<Usuario> amigos = user.getAmigos();
+
 		for (Usuario u : result) {
-			if(user.getAmigos().contains(u)) {
+			if(amigos.contains(u)) {
 				u.setFriendStatus(1);
-			} else if (user.getAmigosPendientes().contains(u)) {
+				logger.info("setteo friend status en 1");
+			} else if (amigosPendientes.contains(u)) {
 				u.setFriendStatus(2);
-			} else if (user.getAmigosSolicitados().contains(u)) {
+				logger.info("setteo friend status en 2");
+			} else if (amigosSolicitados.contains(u)) {
 				u.setFriendStatus(3);
+				logger.info("setteo friend status en 3");
 			} else {
 				u.setFriendStatus(0);
+				logger.info("setteo friend status en 0");
 			}
 		}
 

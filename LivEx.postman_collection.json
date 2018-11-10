@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e4e0a225-dd13-4a8a-826f-a10f4396ee61",
+		"_postman_id": "cb3d5e2a-c0dd-4564-a8de-267088ff781e",
 		"name": "LivEx",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -12,8 +12,17 @@
 					"name": "Get All",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"body": {},
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{ip}}:{{port}}/espectaculos",
 							"host": [
@@ -59,7 +68,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{ip}}:{{port}}/espectaculos/5b738aee07ca0696d4be4539",
 							"host": [
@@ -78,17 +90,26 @@
 					"name": "Delete",
 					"request": {
 						"method": "DELETE",
-						"header": [],
-						"body": {},
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
-							"raw": "{{ip}}:{{port}}/espectaculos/0",
+							"raw": "{{ip}}:{{port}}/espectaculos/5bd1363ac399fb3bd0a8ce52",
 							"host": [
 								"{{ip}}"
 							],
 							"port": "{{port}}",
 							"path": [
 								"espectaculos",
-								"0"
+								"5bd1363ac399fb3bd0a8ce52"
 							]
 						}
 					},
@@ -100,11 +121,50 @@
 			"name": "Usuarios",
 			"item": [
 				{
+					"name": "Friends",
+					"item": [
+						{
+							"name": "Agregar usuario",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{ip}}:{{port}}/usuarios/5b9ae57fc399fb6a8e4eaadc/friends/5bba40e4c399fb66e0e8098b",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"usuarios",
+										"5b9ae57fc399fb6a8e4eaadc",
+										"friends",
+										"5bba40e4c399fb66e0e8098b"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
 					"name": "Crear admin en DB",
 					"request": {
 						"method": "POST",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{ip}}:{{port}}/usuarios/crearDb",
 							"host": [
@@ -129,7 +189,10 @@
 								"value": "Bearer {{token}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{ip}}:{{port}}/usuarios",
 							"host": [
@@ -153,7 +216,10 @@
 								"value": "Bearer {{token}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{ip}}:{{port}}/usuarios/5b7c2f1607ca060bb0d16417",
 							"host": [
@@ -209,7 +275,10 @@
 								"value": "Bearer {{token}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{ip}}:{{port}}/usuarios/5b7c2f1607ca060bb0d16417",
 							"host": [
@@ -250,6 +319,69 @@
 							"port": "{{port}}",
 							"path": [
 								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Feed de un usuario",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{ip}}:{{port}}/usuarios/5b9ae57fc399fb6a8e4eaadc/feed",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"usuarios",
+								"5b9ae57fc399fb6a8e4eaadc",
+								"feed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario by username con fStatus",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{ip}}:{{port}}/usuarios/buscar?username=li",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"usuarios",
+								"buscar"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "li"
+								}
 							]
 						}
 					},
@@ -305,7 +437,10 @@
 					"request": {
 						"method": "POST",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{ip}}:{{port}}/usuarios/crearDb",
 							"host": [
@@ -330,7 +465,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "192.168.0.86:8080/establecimientos",
 							"host": [
@@ -412,7 +550,10 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "192.168.0.86:8080/establecimientos/5b731b8b07ca06b834e1db05",
 							"host": [
@@ -435,7 +576,10 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "192.168.0.86:8080/establecimientos/5b731b8b07ca06b834e1db05",
 							"host": [
@@ -474,7 +618,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Jodiendo\",\n\t\"desc\": \"Aca jodiendo\",\n\t\"userId\": \"5b7c4aab11e59b29473997e1\"\n}"
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{ip}}:{{port}}/publicaciones",
@@ -556,8 +700,8 @@
 								},
 								{
 									"key": "file",
-									"value": "",
-									"type": "file"
+									"type": "file",
+									"src": ""
 								}
 							]
 						},
@@ -596,26 +740,8 @@
 							}
 						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "Content-Disposition",
-									"value": "form-data",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "name",
-									"value": "file",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "file",
-									"value": "",
-									"type": "file"
-								}
-							]
+							"mode": "raw",
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{ip}}:{{port}}/publicaciones/imagenes/5b9326f511e59b6d6a73485a",
@@ -627,6 +753,39 @@
 								"publicaciones",
 								"imagenes",
 								"5b9326f511e59b6d6a73485a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Publicaciones de un usuario",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{ip}}:{{port}}/publicaciones/usuario/5b9ae57fc399fb6a8e4eaadc",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"publicaciones",
+								"usuario",
+								"5b9ae57fc399fb6a8e4eaadc"
 							]
 						}
 					},

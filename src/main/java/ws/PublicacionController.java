@@ -34,7 +34,7 @@ public class PublicacionController extends AbstractController {
 	@Autowired private EspectaculoRepository especRepo;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public List<Publicacion> getPublicaciones(Principal principal) {
+	public List<Publicacion> getPublicaciones() {
 		logger.info("getPublicaciones()");
 
 		List<Publicacion> listado =  repo.findAll();
@@ -116,13 +116,17 @@ public class PublicacionController extends AbstractController {
 	@RequestMapping(value="/usuario/{id}", method = RequestMethod.GET)
 	public List<Publicacion> getPublicacionByUserId(@PathVariable("id") String id){
 		logger.info("getPublicacionByUserId()");
-		return  repo.findByUserId(id);
+		List<Publicacion> result = repo.findByUserId(id);
+		Collections.reverse(result);
+		return  result;
 	}
 
 	@RequestMapping(value="/evento/{id}", method = RequestMethod.GET)
 	public List<Publicacion> getPublicacionByEventoId(@PathVariable("id") String id){
 		logger.info("getPublicacionByEventoId()");
-		return  repo.findByEventoId(id);
+		List<Publicacion> result = repo.findByEventoId(id);
+		Collections.reverse(result);
+		return  result;
 	}
 
 }

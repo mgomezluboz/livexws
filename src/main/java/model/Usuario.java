@@ -344,4 +344,13 @@ public class Usuario implements UserDetails {
 	public Integer getFriendStatus() {
 		return friendStatus;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if(this.getId().equals(((Usuario)o).getId())) {
+			return true;
+		}
+
+		return false;
+	}
 }
