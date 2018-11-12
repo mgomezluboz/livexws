@@ -37,7 +37,6 @@ public class UserController extends AbstractController{
 	@Autowired private UsuarioStore contentStore;
 
 	@Autowired private EspectaculoRepository repoEspectaculos;
-	@Autowired private PublicacionRepository repoPublicaciones;
 	@Autowired private PublicacionController pubController;
 	
 	@RequestMapping(value="/crearDb", method = RequestMethod.POST)

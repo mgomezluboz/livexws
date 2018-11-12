@@ -69,7 +69,7 @@ public class EspectaculoController extends AbstractController {
 
 		Espectaculo result = repo.insert(espec);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(result.getId()).toUri();
-		return ResponseEntity.created(location).build();
+		return ResponseEntity.created(location).body("{\"id\": \""+ result.getId() + "\"}");
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
