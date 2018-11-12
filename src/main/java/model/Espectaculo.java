@@ -177,4 +177,13 @@ public class Espectaculo {
 	public void setLinkCompra(String linkCompra) {
 		this.linkCompra = linkCompra;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this.id.equals(((Espectaculo)o).getId())) {
+			return true;
+		}
+
+		return false;
+	}
 }

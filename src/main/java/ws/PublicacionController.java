@@ -1,14 +1,10 @@
 package ws;
 
 import java.net.URI;
-import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import model.*;
-import util.ControllerUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,9 +44,10 @@ public class PublicacionController extends AbstractController {
 			mine = false;
 			if (null != pub.getUserId() && pub.getUserId().equals(user.getId())) {
 				mine = true;
+				pub.setUsername(userDetails.getUsername());
+			} else {
+				pub.setUsername(userRepo.findById(pub.getUserId()).getUsername());
 			}
-
-			pub.setUsername(userDetails.getUsername());
 
 			Espectaculo espectaculo = null;
 			for (Espectaculo e : espectaculos) {

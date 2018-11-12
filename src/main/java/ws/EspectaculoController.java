@@ -43,7 +43,6 @@ public class EspectaculoController extends AbstractController {
 
 		List<Espectaculo> listado =  repo.findAll();
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
 		Usuario user = userRepo.findByUsername(userDetails.getUsername());
 
 		Boolean atendido;
@@ -62,6 +61,12 @@ public class EspectaculoController extends AbstractController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<?> createEspectaculo(@RequestBody Espectaculo espec) throws Exception {
 		logger.info("createEspectaculo()");
+
+		Espectaculo buscarNombre = repo.findByNombre(espec.getNombre());
+		if (null != buscarNombre) {
+			return ResponseEntity.badRequest().body("Ya existe un espectaculo con ese nombre.");
+		}
+
 		Espectaculo result = repo.insert(espec);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(result.getId()).toUri();
 		return ResponseEntity.created(location).build();

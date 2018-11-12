@@ -144,6 +144,8 @@ public class UserController extends AbstractController{
 			}
 		}
 
+		Collections.reverse(result);
+
 		return result;
 	}
 	
