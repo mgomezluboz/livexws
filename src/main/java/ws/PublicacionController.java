@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import exceptions.UserNotFoundException;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -37,6 +39,7 @@ public class PublicacionController extends AbstractController {
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Usuario user = userRepo.findByUsername(userDetails.getUsername());
 		List<Espectaculo> espectaculos = especRepo.findAll();
+		Usuario userPub = null;
 
 		Boolean mine;
 
@@ -46,7 +49,12 @@ public class PublicacionController extends AbstractController {
 				mine = true;
 				pub.setUsername(userDetails.getUsername());
 			} else {
-				pub.setUsername(userRepo.findById(pub.getUserId()).getUsername());
+				userPub = userRepo.findById(pub.getUserId());
+				if (null == userPub) {
+					pub.setUsername("[Usuario borrado]");
+				} else {
+					pub.setUsername(userPub.getUsername());
+				}
 			}
 
 			Espectaculo espectaculo = null;

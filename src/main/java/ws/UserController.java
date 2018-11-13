@@ -60,8 +60,12 @@ public class UserController extends AbstractController{
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
 	public Usuario getUsuarioById(@PathVariable("id") String id) throws UserNotFoundException {
 		logger.info("getUsuarioById()");
-		return  repo.findById(id);
-
+		Usuario result = repo.findById(id);
+		if (null == result) {
+			throw new UserNotFoundException("Usuario no encontrado.");
+		}
+		return result;
+ 
 	}
 
 	@RequestMapping(value="/{id}/friends", method = RequestMethod.GET)
